@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Person
+comment0.text=\r\n\ Superclass\ of\ subclasses\ Customer\ and\ Staff\r\n
+comment1.params=name\ email\ phoneNo\ typeOfPerson
+comment1.target=Person(java.lang.String,\ java.lang.String,\ java.lang.String,\ char)
+comment2.params=
+comment2.target=java.lang.String\ getName()
+numComments=3
