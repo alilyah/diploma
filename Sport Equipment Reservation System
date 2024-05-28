@@ -1,0 +1,150 @@
+// SERS (Sports Equipment Reservation System)
+#include <iostream>
+#include <string>
+using namespace std;
+
+// function prototypes
+void makeReservation(string);
+void returnEquipment();
+void displayEquipment();
+void getInfo();
+int getEquipmentNumber();
+int getNumberOfUnits();
+
+// array sizes
+const int N = 8;
+const int M = 2;
+
+string equipmentList[N][M] = // [8][2]
+{
+  {"soccer ball", "10"},
+  {"basketball", "10"},
+  {"tennis racket", "10"},
+  {"tennis ball", "5"},
+  {"badminton racket", "20"},
+  {"badminton shuttle", "50"},
+  {"volleyball", "10"},
+  {"netball", "10"},
+};
+
+int main() 
+{
+  int choice;
+  do {
+    // Display the menu
+    cout << "=====================================" << endl;
+    cout << " Sport Equipments Reservation System" << endl;
+    cout << "=====================================" << endl << endl;
+    cout << "  1. Make a reservation" << endl;
+    cout << "  2. Return equipment" << endl;
+    cout << "  3. View inventory" << endl;
+    cout << "  4. Exit" << endl << endl;
+    cout << "=====================================" << endl << endl; 
+
+    // Prompt the user to select an option
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice) 
+	{
+		case 1:
+			getInfo(); // makeReservation() inside this function
+			break;
+		
+		case 2:	
+			returnEquipment();
+			break;
+		
+		case 3:		
+			displayEquipment();
+			cout << endl;
+			break;
+		
+		case 4:	      
+			break;
+		
+		default:
+			cout << "Invalid choice. Please try again." << endl;
+    }
+
+  } while (choice != 4);
+
+  return 0;
+}
+
+// Function to get user's information
+void getInfo()
+{
+	string userName;
+	cout << "Enter the user's name: ";
+	cin >> userName;
+//	getline (cin, userName);
+	cout << endl;
+	makeReservation(userName);
+	return;
+}
+
+// Function to get the equipment number
+int getEquipmentNumber()
+{
+	int equipmentNumber;
+	cout << "Enter the equipment number: ";
+	cin >> equipmentNumber;
+	equipmentNumber--; // convert to zero-indexed array
+	return equipmentNumber;
+}
+
+// Function to get the number of units
+int getNumberOfUnits()
+{
+	int units;
+	cout << "Enter the number of units: ";
+	cin >> units;
+	return units;
+}
+
+// Function to make reservation
+void makeReservation(string name) 
+{
+	displayEquipment();
+	int equipmentNumber = getEquipmentNumber();
+	int units = getNumberOfUnits();
+
+	if (equipmentNumber >= 0 && equipmentNumber < N && units > 0 && units <= stoi(equipmentList[equipmentNumber][1])) 
+	{
+	    equipmentList[equipmentNumber][1] = to_string(stoi(equipmentList[equipmentNumber][1]) - units);
+		cout << "\nName: " << name << endl;
+	    cout << "Reservation made successfully!" << endl;
+	    cout << "Please return the equipment within 4 hours." << endl << endl;
+	} 
+	else
+		cout << "Reservation failed. Invalid equipment or units." << endl << endl;
+}
+
+// Function to return equipment
+void returnEquipment()
+{
+	displayEquipment();
+	int equipmentNumber = getEquipmentNumber();
+	int units = getNumberOfUnits();
+	
+	if (equipmentNumber >= 0 && equipmentNumber < N && units > 0 && units <= stoi(equipmentList[equipmentNumber][1])) 
+	{
+	    equipmentList[equipmentNumber][1] = to_string(stoi(equipmentList[equipmentNumber][1]) + units);
+	    cout << "\nEquipment returned successfully!" << endl << endl;
+	} 
+	else
+		cout << "Return of equipment failed. Invalid equipment or units." << endl << endl;
+}
+
+// Function to display the available equipment
+void displayEquipment() 
+{
+	cout << "=====================================" << endl;
+	cout << "       Available equipments:" << endl;
+	cout << "=====================================" << endl << endl;
+	
+	for (int i = 0; i < N; i++)
+		cout << "  " << i+1 << ". " << equipmentList[i][0] << ": " << equipmentList[i][1] << endl;
+	cout << endl << "=====================================" << endl << endl;
+}
